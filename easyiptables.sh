@@ -184,13 +184,14 @@ tf
 
 tf() {
 clear
-echo "1] list rules"
-echo "2] Create rules"
-echo "3] Delete rules"
-echo "4] Create chain"
-echo "5] Delete chain with rules"
-echo "6] Flush chain"
-echo "7] Flush table"
+echo " 1] list rules"
+echo " 2] Create rules"
+echo " 3] Delete rules"
+echo " 4] Create chain"
+echo " 5] Delete chain with rules"
+echo " 6] Flush chain"
+echo " 7] Flush table"
+echo "99] Back"
 read tf
 case "$tf" in
 1)
@@ -246,6 +247,9 @@ fi
 7)
 iptables -F -t filter
 list 1
+;;
+99)
+echo ""
 ;;
 esac
 }
