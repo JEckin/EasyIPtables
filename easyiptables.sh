@@ -56,8 +56,7 @@ tfcreate() {
 clear
 echo "1] Change Policy from a Chain"
 echo "2] Add source rule to Chain"
-echo "3] Add input rule to Chain"
-echo "4] Add output rule to Chain"
+echo "3] Add input/output rule to Chain"
 read tfcreate
 case "$tfcreate" in
 1)
@@ -81,6 +80,60 @@ fi
 iptables -P $chain $do
 ;;
 2)
+clear
+echo "IP address:"
+read ip
+clear
+iptables -vL -t filter
+echo "==============="
+echo "Chain (case-sensitive):"
+read chain
+clear
+echo "1] Accept"
+echo "2] Drop"
+echo "3] Return"
+read a
+if [ $a == 1 ]; then
+do="ACCEPT"
+elif [ $a == 2 ]; then
+do="DROP"
+elif [ $a == 3 ]; then
+do="RETURN"
+fi
+iptables -A $chain -s $ip -j $do
+;;
+3)
+clear
+echo "Interface:"
+read face
+clear
+echo "1] Input"
+echo "2] Output"
+read v
+if [ $v == 1 ]
+then
+put="-o"
+else
+put="-i"
+fi
+clear
+iptables -vL -t filter
+echo "==============="
+echo "Chain (case-sensitive):"
+read chain
+clear
+echo "1] Accept"
+echo "2] Drop"
+echo "3] Return"
+read a
+if [ $a == 1 ]; then
+do="ACCEPT"
+elif [ $a == 2 ]; then
+do="DROP"
+elif [ $a == 3 ]; then
+do="RETURN"
+fi
+iptables -A $chain $put $face -j $do
 ;;
 esac
 }
