@@ -142,7 +142,7 @@ clear
 echo "1] Incomming (Input)"
 echo "2] Outgoing (Output)"
 read v
-if [ $v == 1 ]
+if [ $v == 2 ]
 then
 put="-o"
 chain=OUTPUT
