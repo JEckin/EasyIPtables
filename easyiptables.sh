@@ -42,9 +42,12 @@ tr
 ts
 ;;
 98)
+clear
 update
 ;;
 99)
+clear
+exit
 exit="true"
 ;;
 esac
@@ -147,8 +150,8 @@ esac
 update() {
 clear
 git clone https://github.com/jeckin/easyiptables /tmp/easyiptables
-cp /tmp/j3ck/easyiptables.sh /bin/eip
-cp /tmp/j3ck/easyiptables.sh /bin/easyiptables
+cp /tmp/easyiptables/easyiptables.sh /bin/eip
+cp /tmp/easyiptables/easyiptables.sh /bin/easyiptables
 sudo chmod +x /bin/eip
 sudo chmod +x /bin/easyiptables
 rm -r /tmp/easyiptables
