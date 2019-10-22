@@ -139,8 +139,8 @@ echo "=========="
 echo "Interface:"
 read face
 clear
-echo "1] Input"
-echo "2] Output"
+echo "1] Incomming (Input)"
+echo "2] Outgoing (Output)"
 read v
 if [ $v == 1 ]
 then
@@ -199,7 +199,14 @@ list 1
 tfcreate
 ;;
 3)
-tfdelete
+clear
+iptables -vL -t filter
+echo "================"
+echo "Chain (case-sensitive):"
+read chain
+echo "Position (row):"
+read row
+iptables -D $chain $row
 ;;
 4)
 clear
