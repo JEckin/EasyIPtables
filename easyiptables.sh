@@ -81,6 +81,7 @@ iptables -P $chain $do
 ;;
 2)
 clear
+ip addr
 echo "IP address:"
 read ip
 clear
@@ -104,6 +105,7 @@ iptables -A $chain -s $ip -j $do
 ;;
 3)
 clear
+ip addr
 echo "Interface:"
 read face
 clear
@@ -113,14 +115,11 @@ read v
 if [ $v == 1 ]
 then
 put="-o"
+chain=OUTPUT
 else
 put="-i"
+chain=INPUT
 fi
-clear
-iptables -vL -t filter
-echo "==============="
-echo "Chain (case-sensitive):"
-read chain
 clear
 echo "1] Accept"
 echo "2] Drop"
