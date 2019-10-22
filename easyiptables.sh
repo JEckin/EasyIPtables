@@ -51,12 +51,13 @@ exit
 exit="true"
 ;;
 esac
-
+}
 tfcreate() {
 clear
 echo "1] Change Policy from a Chain"
 echo "2] Add source rule to Chain"
 echo "3] Add input/output rule to Chain"
+echo "4] Add Port rule to Chain"
 read tfcreate
 case "$tfcreate" in
 1)
@@ -68,14 +69,11 @@ read chain
 clear
 echo "1] Accept"
 echo "2] Drop"
-echo "3] Return"
 read a
 if [ $a == 1 ]; then
 do="ACCEPT"
 elif [ $a == 2 ]; then
 do="DROP"
-elif [ $a == 3 ]; then
-do="RETURN"
 fi
 iptables -P $chain $do
 ;;
@@ -134,10 +132,55 @@ do="RETURN"
 fi
 iptables -A $chain $put $face -j $do
 ;;
+4)
+clear
+ip addr
+echo "=========="
+echo "Interface:"
+read face
+clear
+echo "1] Input"
+echo "2] Output"
+read v
+if [ $v == 1 ]
+then
+put="-o"
+chain=OUTPUT
+else
+put="-i"
+chain=INPUT
+fi
+clear
+echo "Port:"
+read port
+clear
+echo "1] TCP"
+echo "2] UDP"
+read tcpudp
+if [ $tcpudp = 2 ]; then
+tcpudp="udp"
+else
+tcpudp="tcp"
+fi
+clear
+echo "1] Accept"
+echo "2] Drop"
+echo "3] Return"
+read a
+if [ $a == 1 ]; then
+do="ACCEPT"
+elif [ $a == 2 ]; then
+do="DROP"
+elif [ $a == 3 ]; then
+do="RETURN"
+fi
+iptables -A $chain $put $face -p $tcpudp --dport $port --sport 1024:65535 -j $do
+clear
+list 1
+;;
 esac
 }
 
-}
 tf() {
 clear
 echo "1] list rules"
