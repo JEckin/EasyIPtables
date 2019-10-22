@@ -52,6 +52,12 @@ exit="true"
 ;;
 esac
 }
+
+tn(){
+clear
+echo "1]"
+}
+
 tfcreate() {
 clear
 echo "1] Add source rule to Chain"
