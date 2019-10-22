@@ -179,6 +179,7 @@ clear
 list 1
 ;;
 esac
+tf
 }
 
 tf() {
