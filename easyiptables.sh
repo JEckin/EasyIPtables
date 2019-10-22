@@ -54,30 +54,12 @@ esac
 }
 tfcreate() {
 clear
-echo "1] Change Policy from a Chain"
-echo "2] Add source rule to Chain"
-echo "3] Add input/output rule to Chain"
-echo "4] Add Port rule to Chain"
+echo "1] Add source rule to Chain"
+echo "2] Add input/output rule to Chain"
+echo "3] Add Port rule to Chain"
 read tfcreate
 case "$tfcreate" in
 1)
-clear
-iptables -vL -t filter
-echo "==============="
-echo "Chain (case-sensitive):"
-read chain
-clear
-echo "1] Accept"
-echo "2] Drop"
-read a
-if [ $a == 1 ]; then
-do="ACCEPT"
-elif [ $a == 2 ]; then
-do="DROP"
-fi
-iptables -P $chain $do
-;;
-2)
 clear
 ip addr
 echo "IP address:"
@@ -101,7 +83,7 @@ do="RETURN"
 fi
 iptables -A $chain -s $ip -j $do
 ;;
-3)
+2)
 clear
 ip addr
 echo "Interface:"
@@ -132,7 +114,7 @@ do="RETURN"
 fi
 iptables -A $chain $put $face -j $do
 ;;
-4)
+3)
 clear
 ip addr
 echo "=========="
@@ -185,22 +167,41 @@ tf
 tf() {
 clear
 echo " 1] list rules"
-echo " 2] Create rules"
-echo " 3] Delete rules"
-echo " 4] Create chain"
-echo " 5] Delete chain with rules"
-echo " 6] Flush chain"
-echo " 7] Flush table"
+echo " 2] Change Policy from a Chain"
+echo " 3] Create rules"
+echo " 4] Delete rules"
+echo " 5] Create chain"
+echo " 6] Delete chain with rules"
+echo " 7] Flush chain"
+echo " 8] Flush table"
 echo "99] Back"
 read tf
 case "$tf" in
 1)
 list 1
+tf
 ;;
 2)
-tfcreate
+clear
+iptables -vL -t filter
+echo "==============="
+echo "Chain (case-sensitive):"
+read chain
+clear
+echo "1] Accept"
+echo "2] Drop"
+read a
+if [ $a == 1 ]; then
+do="ACCEPT"
+elif [ $a == 2 ]; then
+do="DROP"
+fi
+iptables -P $chain $do
 ;;
 3)
+tfcreate
+;;
+4)
 clear
 iptables -vL -t filter
 echo "================"
@@ -210,7 +211,7 @@ echo "Position (row):"
 read row
 iptables -D $chain $row
 ;;
-4)
+5)
 clear
 echo "Chain:"
 read chain
@@ -220,7 +221,7 @@ iptables -N $chain
 list 1
 fi
 ;;
-5)
+6)
 clear
 iptables -vL -t filter
 echo "==============="
@@ -232,7 +233,7 @@ iptables -X $chain
 list 1
 fi
 ;;
-6)
+7)
 clear
 iptables -vL -t filter
 echo "================"
@@ -244,7 +245,7 @@ iptables -F $chain -t filter
 list 1
 fi
 ;;
-7)
+8)
 iptables -F -t filter
 list 1
 ;;
