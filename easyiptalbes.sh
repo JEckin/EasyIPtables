@@ -44,6 +44,9 @@ ts
 98)
 update
 ;;
+99)
+exit="true"
+;;
 esac
 
 tfcreate() {
